@@ -1,8 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>LC_895.最大频率栈</title>
+    <url>/2022/11/30/202211/LC-895-%E6%9C%80%E5%A4%A7%E9%A2%91%E7%8E%87%E6%A0%88/</url>
+    <content><![CDATA[<h2 id="最大频率栈"><a href="#最大频率栈" class="headerlink" title="  最大频率栈 "></a><div class="wr">  <div class="t"><a class="link" href="https://leetcode.cn/problems/maximum-frequency-stack/">最大频率栈<i class="fas fa-external-link-alt"></i></a> </div></div></h2><h3 id="题目："><a href="#题目：" class="headerlink" title="题目："></a>题目：</h3><p>设计一个类似堆栈的数据结构，将元素推入堆栈，并从堆栈中弹出<strong>出现频率</strong>最高的元素。</p>
+<p>实现 <code>FreqStack</code> 类:</p>
+<ul>
+<li><code>FreqStack()</code> 构造一个空的堆栈。</li>
+<li><code>void push(int val)</code> 将一个整数 val 压入栈顶。</li>
+<li><code>int pop()</code> 删除并返回堆栈中出现频率最高的元素。<ul>
+<li>如果出现频率最高的元素不只一个，则移除并返回最接近栈顶的元素。</li>
+</ul>
+</li>
+</ul>
+<div class="wgra">  
+    <div class="t"> 
+        示例1:  
+    </div> 
+    <div class="c">   
+        输入：<br>
+["FreqStack","push","push","push","push","push","push","pop","pop","pop","pop"],
+[[],[5],[7],[5],[7],[4],[5],[],[],[],[]]<br>
+输出：[null,null,null,null,null,null,null,5,7,5,4]<br>
+解释：<br>
+FreqStack = new FreqStack();<br>
+freqStack.push (5);//堆栈为 [5]<br>
+freqStack.push (7);//堆栈是 [5,7]<br>
+freqStack.push (5);//堆栈是 [5,7,5]<br>
+freqStack.push (7);//堆栈是 [5,7,5,7]<br>
+freqStack.push (4);//堆栈是 [5,7,5,7,4]<br>
+freqStack.push (5);//堆栈是 [5,7,5,7,4,5]<br>
+freqStack.pop ();//返回 5 ，因为 5 出现频率最高。堆栈变成 [5,7,5,7,4]。<br>
+freqStack.pop ();//返回 7 ，因为 5 和 7 出现频率最高，但7最接近顶部。堆栈变成 [5,7,5,4]。<br>
+freqStack.pop ();//返回 5 ，因为 5 出现频率最高。堆栈变成 [5,7,4]。<br>
+freqStack.pop ();//返回 4 ，因为 4, 5 和 7 出现频率最高，但 4 是最接近顶部的。堆栈变成 [5,7]。 
+    </div>
+</div>
+
+
+
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>0 &lt;= val &lt;= 109</code></li>
+<li><code>push</code> 和 <code>pop</code> 的操作数不大于 <code>2 * 104</code>。</li>
+<li>输入保证在调用 <code>pop</code> 之前堆栈中至少有一个元素。</li>
+</ul>
+<h3 id="解题："><a href="#解题：" class="headerlink" title="解题："></a>解题：</h3><p>这道题可以利用哈希表来做，首先初始化一个哈希表，把出现频率相同的元素压如一个栈中，不同的就创建新的栈压入，所以可以根据<code>List</code> 集合的顺序性来记录出现次数。那么每次出栈就弹出集合索引最大的那个栈里面的第一个元素即可，如果弹出之后栈为空，那么删除这个索引下的栈。</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">FreqStack</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Map&lt;Integer, Integer&gt; map = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">    <span class="keyword">private</span> List&lt;Deque&lt;Integer&gt;&gt; list = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">FreqStack</span><span class="params">()</span> &#123;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">push</span><span class="params">(<span class="type">int</span> val)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">c</span> <span class="operator">=</span> map.getOrDefault(val, <span class="number">0</span>) + <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span> (c &gt; list.size()) &#123;</span><br><span class="line">            list.add(<span class="keyword">new</span> <span class="title class_">ArrayDeque</span>&lt;&gt;());</span><br><span class="line">        &#125;</span><br><span class="line">        list.get(c - <span class="number">1</span>).push(val);</span><br><span class="line">        map.put(val, c);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">pop</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">index</span> <span class="operator">=</span> list.size() - <span class="number">1</span>;</span><br><span class="line">        <span class="type">int</span> <span class="variable">res</span> <span class="operator">=</span> list.get(index).pop();</span><br><span class="line">        <span class="keyword">if</span> (list.get(index).isEmpty()) &#123;</span><br><span class="line">            list.remove(index);</span><br><span class="line">        &#125;</span><br><span class="line">        map.put(res, map.get(res) - <span class="number">1</span>);</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Your FreqStack object will be instantiated and called as such:</span></span><br><span class="line"><span class="comment"> * FreqStack obj = new FreqStack();</span></span><br><span class="line"><span class="comment"> * obj.push(val);</span></span><br><span class="line"><span class="comment"> * int param_2 = obj.pop();</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure></div>
+
+]]></content>
+      <tags>
+        <tag>栈</tag>
+        <tag>哈希表</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>jwt学习笔记</title>
-    <url>/2022/11/29/jwt%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
+    <url>/2022/11/29/202211/jwt%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
     <content><![CDATA[<h1 id="JWT"><a href="#JWT" class="headerlink" title="JWT"></a>JWT</h1><h2 id><a href="#" class="headerlink" title></a><img src="/../images/jwt%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/jwt_1.png" alt="img"></h2><h2 id="1-什么是JWT"><a href="#1-什么是JWT" class="headerlink" title="1. 什么是JWT"></a>1. 什么是JWT</h2><blockquote>
 <p>JSON Web Token (JWT) is an open standard (<a class="link" href="https://tools.ietf.org/html/rfc7519">RFC 7519<i class="fas fa-external-link-alt"></i></a>) that defines a compact and self-contained way for securely transmitting information between parties as a JSON object. This information can be verified and trusted because it is digitally signed. JWTs can be signed using a secret (with the <strong>HMAC</strong> algorithm) or a public&#x2F;private key pair using <strong>RSA</strong> or <strong>ECDSA</strong>.</p>
 <p>JSON Web令牌（JWT）是一种开放标准（RFC 7519），它定义了一种紧凑且自包含的方式，用于在各方之间作为JSON对象安全地传输信息。此信息可以验证和信任，因为它是经过数字签名的。JWT可以使用秘密（使用HMAC算法）或使用RSA或ECDSA的公钥&#x2F;私钥对进行签名</p>
@@ -62,7 +116,7 @@
   </entry>
   <entry>
     <title>vue学习笔记</title>
-    <url>/2022/11/28/vue%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
+    <url>/2022/11/28/202211/vue%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
     <content><![CDATA[<h1 id="vue"><a href="#vue" class="headerlink" title="vue"></a>vue</h1><h2 id><a href="#" class="headerlink" title></a><img src="/images/vue%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/vue_1.png" alt="vue_1"></h2><h2 id="1、vue引言"><a href="#1、vue引言" class="headerlink" title="1、vue引言"></a>1、vue引言</h2><p><img src="/images/vue%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/vue_2.png" alt="image.png"></p>
 <blockquote>
 <p><code>渐进式</code> JavaScript框架</p>
