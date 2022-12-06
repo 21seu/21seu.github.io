@@ -9,7 +9,7 @@
     
     <title>
         
-            LC-1796.字符串中第二大的数字 |
+            LC_1796.字符串中第二大的数字 |
         
         夏洛蒂の手稿
     </title>
@@ -185,7 +185,7 @@
     <div class="article-content-container">
 
         <div class="article-title">
-            <span class="title-hover-animation"><h1 style="font-size:2rem; font-weight: bold; margin: 10px 0;">LC-1796.字符串中第二大的数字</h1></span>
+            <span class="title-hover-animation"><h1 style="font-size:2rem; font-weight: bold; margin: 10px 0;">LC_1796.字符串中第二大的数字</h1></span>
         </div>
 
         
@@ -249,7 +249,7 @@
         
 
         <div class="article-content markdown-body">
-            <h2 id="字符串中第二大的数字"><a href="#字符串中第二大的数字" class="headerlink" title="  字符串中第二大的数字"></a><div class="wg">  <div class="t"><a class="link" target="_blank" rel="noopener" href="https://leetcode.cn/problems/second-largest-digit-in-a-string/">字符串中第二大的数字<i class="fas fa-external-link-alt"></i></a></div></div></h2><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给你一个混合字符串 <code>s</code> ，请你返回 <code>s</code> 中 <strong>第二大</strong> 的数字，如果不存在第二大的数字，请你返回 <code>-1</code> 。</p>
+            <h2 id="字符串中第二大的数字"><a href="#字符串中第二大的数字" class="headerlink" title="  字符串中第二大的数字"></a><div class="wg">  <div class="t"><a class="link" target="_blank" rel="noopener" href="https://leetcode.cn/problems/second-largest-digit-in-a-string/">字符串中第二大的数字<i class="fas fa-external-link-alt"></i></a></div></div></h2><h3 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h3><p>给你一个混合字符串 <code>s</code> ，请你返回 <code>s</code> 中 <strong>第二大</strong> 的数字，如果不存在第二大的数字，请你返回 <code>-1</code> 。</p>
 <p><strong>混合字符串</strong> 由小写英文字母和数字组成。</p>
 <div class="wgra">  
     <div class="t">
@@ -280,7 +280,7 @@
 <li><code>1 &lt;= s.length &lt;= 500</code></li>
 <li><code>s</code> 只包含小写英文字母和（或）数字。</li>
 </ul>
-<h2 id="解题"><a href="#解题" class="headerlink" title="解题"></a>解题</h2><p>常规字符串模拟题，先找出字符串中的数字，放到<code>set</code>集合去重，注意：这里的<code>charAt()</code>方法只能取到数字对应的<code>ASCII</code>值，需要<code>(int)(ch) - (int)(&#39;0&#39;)</code>转一下，或者<code>Integer.parseInt(Integer.valueOf(ch))</code>来转成数字；最后把set转成<code>List</code>排个序，取出第二大的数字就是集合倒数第二个元素。</p>
+<h3 id="解题"><a href="#解题" class="headerlink" title="解题"></a>解题</h3><p>常规字符串模拟题，先找出字符串中的数字，放到<code>set</code>集合去重，注意：这里的<code>charAt()</code>方法只能取到数字对应的<code>ASCII</code>值，需要<code>(int)(ch) - (int)(&#39;0&#39;)</code>转一下，或者<code>Integer.parseInt(Integer.valueOf(ch))</code>来转成数字；最后把set转成<code>List</code>排个序，取出第二大的数字就是集合倒数第二个元素。</p>
 <div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">secondHighest</span><span class="params">(String s)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">length</span> <span class="operator">=</span> s.length();</span><br><span class="line">        Set&lt;Integer&gt; set = <span class="keyword">new</span> <span class="title class_">HashSet</span>&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; length; i++) &#123;</span><br><span class="line">            <span class="type">char</span> <span class="variable">ch</span> <span class="operator">=</span> s.charAt(i);</span><br><span class="line">            <span class="keyword">if</span> (Character.isDigit(ch)) &#123;</span><br><span class="line">                set.add((<span class="type">int</span>)(ch) - (<span class="type">int</span>)(<span class="string">&#x27;0&#x27;</span>));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        List&lt;Integer&gt; list = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;(set);</span><br><span class="line">        Collections.sort(list);</span><br><span class="line">        <span class="keyword">return</span> !list.isEmpty() &amp;&amp; list.size() &gt; <span class="number">1</span> ? list.get(list.size() - <span class="number">2</span>) : -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
 
 
@@ -290,11 +290,11 @@
             <div class="post-copyright-info">
                 <div class="article-copyright-info-container">
     <ul>
-        <li>Post title：LC-1796.字符串中第二大的数字</li>
+        <li>Post title：LC_1796.字符串中第二大的数字</li>
         <li>Post author：Fengtingjun</li>
         <li>Create time：2022-12-03 20:32:17</li>
         <li>
-            Post link：https://21seu.github.io/2022/12/03/202212/LC-1796.字符串中第二大的数字/
+            Post link：https://21seu.github.io/2022/12/03/202212/LC_1796.字符串中第二大的数字/
         </li>
         <li>
             Copyright Notice：All articles in this blog are licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> unless stating additionally.
@@ -321,6 +321,21 @@
 
         
             <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/2022/12/06/202212/LC_1805-%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E4%B8%8D%E5%90%8C%E6%95%B4%E6%95%B0%E7%9A%84%E6%95%B0%E7%9B%AE/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">LC_1805.字符串中不同整数的数目</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
                 
                 
                     <div class="article-next">
@@ -507,7 +522,7 @@ setInterval("createtime()",250);
             <div class="post-toc-wrap">
     <div class="post-toc">
         <div style="font-size: 1.3rem;margin-top: 0; margin-bottom: 0.8rem; transition-duration: 0.1s;"><i class="fa-solid fa-list-tree"></i> <strong>Contents</strong></div>
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%AC%AC%E4%BA%8C%E5%A4%A7%E7%9A%84%E6%95%B0%E5%AD%97"><span class="nav-text">  字符串中第二大的数字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE"><span class="nav-text">题目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E9%A2%98"><span class="nav-text">解题</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%AC%AC%E4%BA%8C%E5%A4%A7%E7%9A%84%E6%95%B0%E5%AD%97"><span class="nav-text">  字符串中第二大的数字</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE"><span class="nav-text">题目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E9%A2%98"><span class="nav-text">解题</span></a></li></ol></li></ol>
     </div>
 </div>
         </aside>
